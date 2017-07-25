@@ -1,7 +1,5 @@
 <?php
-//新政许可系统
-// exit;
-
+//连接sql server
 $db_server = '10.0.5.74,52437';
 
 $db_id = 'sa';
