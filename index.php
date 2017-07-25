@@ -33,6 +33,7 @@ foreach($new_row as $k=>&$v){
 }
 echo json_encode($new_row);
 
+//
 function is_utf8($str){
     $len = strlen($str);
     for($i = 0; $i < $len; $i++){
