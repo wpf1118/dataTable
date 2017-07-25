@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,maximum-scale=1.0,user-scalable=0">
+    <meta charset="utf-8">
+    <title>模态框</title>
+    <link rel="stylesheet" href="lib/bootstrap3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/css/public_traffic.css">
+    <link rel="stylesheet" href="lib/css/dataTables.bootstrap.css">
+    <style>
+       /*表格样式*/
+       .table-bordered{
+            width:100%; 
+            border:1px solid #244967; 
+            color: #000; 
+            border-collapse:collapse;
+       }
+       .table-bordered>thead>tr>th,.table-bordered>tbody>tr>td,.table-bordered>tfoot>tr>td{
+            text-align: center; 
+            font-size:16px; 
+       }
+       .table-bordered>thead>tr>th{
+            font-size:18px;
+       }
+    </style>
+</head>
+<body>
+    <!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#receive"> -->
+    <button type="button" class="btn btn-primary btn-lg" id="launchModal">
+        Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="receive" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:62%;height:auto;">
+            <div class="modal-content">
+                <div class="modal-header" style="background:#2d6ba1;color:#fff;">
+                    <button type="button" class="close"
+                            data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        收文详情
+                    </h4>
+                </div>
+                <div class="modal-body" style="width:100%;height:auto;">
+                    <!-- <div class="table-content table_box" style="padding-top: 0px;"> -->
+                        <table class="table table-bordered" id="table" style="background-color: none;">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>发文字号</th>
+                                <th>紧急程度</th>
+                                <th>发文序号</th>
+                                <th>拟稿人</th>
+                                <th>公文标题</th>
+                                <th>拟稿意见</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    <!-- </div> -->
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    
+    <script src="lib/js/jquery.min.js"></script>
+    <script src="lib/bootstrap3/js/bootstrap.js"></script>
+    <script src="lib/js/jquery.dataTables.min.js"></script>
+    <script src="lib/js/dataTables.bootstrap.min.js"></script>
+    <script>
+        $('#launchModal').on('click',function(){
+            $('#receive').modal('toggle');
+        })
+        
+        $('#receive').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var recipient = button.data('whatever') // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            $.ajax({
+                type: 'post',
+                data: {},
+                url: 'index.php',
+                dataType: 'json',
+                success: function(res) {
+                    $("#table").DataTable({
+                        data: res,
+                        columns: [{
+                            "data": "index"
+                        }, {
+                            "data": "index"
+                        }, {
+                            "data": "index"
+                        }, {
+                            "data": "index"
+                        }, {
+                            "data": "index"
+                        }, {
+                            "data": "index"
+                        }, {
+                            "data": "index"
+                        }, {
+                            "data": "index"
+                        }],
+                        "columnDefs": [{
+                            "targets": [7],
+                            "data": "id",
+                            "render": function(data, type, full) {
+                                return '<a tittle="查看详细信息" style="background:#2d6ba1;border-color:#2d6ba1;"\
+                         data-id="' + data + '" class="btn btn-info js-editMsg detailBtn3" role="button"  href="#"\
+                          ><i class="glyphicon glyphicon-list"></i></a>';
+                            }
+                        }],
+                        "bDestroy": true,
+                        "bLengthChange": false,
+                        "bPaginate": true,
+                        "oLanguage": { //国际化配置  
+                            "sProcessing": "正在获取数据，请稍后...",
+                            "sLengthMenu": "显示 _MENU_ 条",
+                            "sZeroRecords": "没有您要搜索的内容",
+                            "sInfo": "从 _START_ 到  _END_ 条记录 总数据为 _TOTAL_ 条",
+                            "sInfoEmpty": "数据为0",
+                            "sInfoFiltered": "(全部数据 _MAX_ 条)",
+                            "sInfoPostFix": "",
+                            "sSearch": "搜索",
+                            "sUrl": "",
+                            "oPaginate": {
+                                "sFirst": "第一页",
+                                "sPrevious": "上一页",
+                                "sNext": "下一页",
+                                "sLast": "最后一页"
+                            }
+                        }
+                    });
+                },
+                error:function(){
+                    alert(22)
+                }
+            })
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+            // modal.find('.modal-title').text('New message to ' + recipient)
+            // modal.find('.modal-body input').val(recipient)
+        })
+    </script>
+</body>
+</html>
+ 
